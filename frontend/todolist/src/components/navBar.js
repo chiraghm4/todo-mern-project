@@ -36,7 +36,7 @@ function NavBar() {
           <Form className="d-flex">
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Search Todo"
               className="me-2"
               aria-label="Search"
             />

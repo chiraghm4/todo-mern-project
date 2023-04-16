@@ -1,35 +1,55 @@
-import {React, useEffect, useState} from 'react'
-import Card from 'react-bootstrap/Card';
-import axios from 'axios'
+import { React, useEffect, useState } from "react";
+import { Card, Button } from "react-bootstrap";
+import axios from "axios";
+import "../styles/styles.css";
 
 function TodoCard() {
-    const [allTodos, setAllTodos] = useState([{}])
-    useEffect(() => {
-        const getAllTodos = async () => {
-            const res = await axios.get("http://localhost:8000/todos")
-            console.log(res.data, 'data')
-            setAllTodos(res.data)
-            console.log(allTodos)
-        }
-        getAllTodos();
-    }, [])
-    
+  const [allTodos, setAllTodos] = useState([]);
+  const [deleteC, setDeleteC] = useState(0)
+  useEffect(() => {
+    const getAllTodos = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:8000/todos");
+        setAllTodos(data);
+        console.log(allTodos);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAllTodos();
+  }, [deleteC]);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    axios
+      .delete(`http://localhost:8000/todos/${id}`)
+      .then(function(res) {
+        setDeleteC(deleteC+1)
+        console.log(res)
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <>
-    {}
-        <Card style={{ width: '50%', fontSize: "large" }}>
-        <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-            <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-            </Card.Text>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
-        </Card>
-    </>
+    <div className="">
+      {allTodos.map((item, index) => {
+        return (
+          <Card style={{ fontSize: "large", marginTop: "10px" }} key={index}>
+            <Card.Body>
+              <Card.Title>{item.todo}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {item.desc}
+              </Card.Subtitle>
+
+              <Button>Update</Button>
+              <Button variant="danger" onClick={() => handleDelete(item._id)}>
+                Delete
+              </Button>
+            </Card.Body>
+          </Card>
+        );
+      })}
+    </div>
   );
 }
 

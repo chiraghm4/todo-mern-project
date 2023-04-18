@@ -7,7 +7,7 @@ function AddTodoForm() {
   const [desc, setDesc] = useState("");
 
   const handleSubmit = async () => {
-    axios.post('http://localhost:8000/todos', {
+    axios.post('http://localhost:8001/todos', {
         todo: title,
         desc: desc
       })

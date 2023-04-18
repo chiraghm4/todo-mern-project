@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Form, Container } from "react-bootstrap";
 import axios from "axios";
 
 function UpdateModal({ show, handleClose, todo_id }) {
-    console.log(todo_id)
-    const [title, setTitle] = useState("")
-    const [desc, setDesc] = useState("")
+  console.log(todo_id);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
-    const handleUpdateTodo = () => {
-        axios.put(`http://localhost:8000/todos/${todo_id}`, {
-            todo: title,
-            desc: desc
-        })
-        handleClose();
-    }
+  const handleUpdateTodo = () => {
+    axios
+      .put(`http://localhost:8001/todos/${todo_id}`, {
+        todo: title,
+        desc: desc,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+    handleClose();
+  };
 
   return (
     <>
@@ -27,14 +30,24 @@ function UpdateModal({ show, handleClose, todo_id }) {
           <Form>
             <Form.Group className="mb-3" controlId="updatedTodo">
               <Form.Label>Updated Todo Title</Form.Label>
-              <Form.Control type="text" placeholder="Type Here" onChange={(e) => setTitle(e.target.value)} value={title} />
+              <Form.Control
+                type="text"
+                placeholder="Type Here"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+              />
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} onChange={(e) => setDesc(e.target.value)} value={desc} />
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                onChange={(e) => setDesc(e.target.value)}
+                value={desc}
+              />
             </Form.Group>
           </Form>
         </Container>

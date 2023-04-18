@@ -8,11 +8,12 @@ function TodoCard() {
   const [allTodos, setAllTodos] = useState([]);
   const [deleteC, setDeleteC] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [todoId, setTodoId] = useState('')
 
   useEffect(() => {
     const getAllTodos = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8000/todos");
+        const { data } = await axios.get("http://localhost:8001/todos");
         setAllTodos(data);
         console.log(allTodos);
       } catch (err) {
@@ -20,9 +21,10 @@ function TodoCard() {
       }
     };
     getAllTodos();
-  }, [deleteC]);
+  }, [deleteC, showModal]);
 
-  const handleShow = () => {
+  const handleShow = (id) => {
+    setTodoId(id)
     setShowModal(true);
   };
   
@@ -33,7 +35,7 @@ function TodoCard() {
   const handleDelete = async (id) => {
     console.log(id);
     axios
-      .delete(`http://localhost:8000/todos/${id}`)
+      .delete(`http://localhost:8001/todos/${id}`)
       .then(function (res) {
         setDeleteC(deleteC + 1);
         console.log(res);
@@ -54,11 +56,11 @@ function TodoCard() {
                 <Card.Subtitle className="mb-2 text-muted">
                   {item.desc}
                 </Card.Subtitle>
-                <Button onClick={handleShow}>Update</Button>
+                <Button onClick={() => handleShow(item._id)}>Update</Button>
+                <UpdateModal show={showModal} handleClose={handleClose} todo_id={todoId} />
                 <Button variant="danger" onClick={() => handleDelete(item._id)}>
                   Delete
                 </Button>
-                <UpdateModal show={showModal} handleClose={handleClose} todo_id={item._id} />
               </Card.Body>
             </Card>
           );

@@ -4,6 +4,11 @@ const app = express();
 const todoRouter = require('./src/routes/todoRoutes');
 const connectDB = require('./src/helpers/db');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+//configure env
+dotenv.config();
+
 connectDB();
 
 app.use(cors());
@@ -15,5 +20,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to todo list!');
 })
 
-app.listen(8000, () => console.log("listening on http://localhost:8000"));
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
 

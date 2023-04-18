@@ -25,13 +25,17 @@ const createTodo = async (req, res) => {
 
 const updateTodo = async (req, res) => {
     console.log(req.params.id)
+
+    const {todo, desc} = req.body
+    // console.log(req.body, 'body')
+    // console.log(todo, desc, 'body')
     try {
         const updatedTodo = await todoSchema.findOneAndUpdate(
           {
             _id: req.params.id,
           },
           {
-            $set: { todo: "updated" },
+            $set: { todo: `${todo}`, desc: `${desc}` },
           }
         );
         res.send('updated given todo')

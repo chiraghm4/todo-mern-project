@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -6,6 +8,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavBar() {
+  const [keyword, setKeyword] = useState("")
+  useEffect(() => {
+    const searchTodo = async () => {
+      const res = await axios.get(`http://localhost:8001/todos/search/${keyword}`)
+      console.log(res, 'result')
+    }
+    searchTodo()
+  }, [keyword])
+
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -39,6 +50,8 @@ function NavBar() {
               placeholder="Search Todo"
               className="me-2"
               aria-label="Search"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
             />
             <Button variant="outline-success">Search</Button>
           </Form>

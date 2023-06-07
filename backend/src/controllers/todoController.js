@@ -10,6 +10,15 @@ const getTodo = async (req, res) => {
   }
 };
 
+const getOneTodo = async (req, res) => {
+  const id = req.params.id
+  try {
+    const oneTodo = await todoSchema.findOne({_id: ObjectId(id)})
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 const createTodo = async (req, res) => {
   const { todo, desc } = req.body;
   try {
@@ -24,37 +33,58 @@ const createTodo = async (req, res) => {
 };
 
 const updateTodo = async (req, res) => {
-    console.log(req.params.id)
+  console.log(req.params.id);
 
-    const {todo, desc} = req.body
-    // console.log(req.body, 'body')
-    // console.log(todo, desc, 'body')
-    try {
-        const updatedTodo = await todoSchema.findOneAndUpdate(
-          {
-            _id: req.params.id,
-          },
-          {
-            $set: { todo: `${todo}`, desc: `${desc}` },
-          }
-        );
-        res.send('updated given todo')
-    } catch (err) {
-        console.log(err)
-    }
+  const { todo, desc } = req.body;
+  // console.log(req.body, 'body')
+  // console.log(todo, desc, 'body')
+  try {
+    const updatedTodo = await todoSchema.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      {
+        $set: { todo: `${todo}`, desc: `${desc}` },
+      }
+    );
+    res.send("updated given todo");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const deleteTodo = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   try {
     const deletedTodo = await todoSchema.deleteOne({
       _id: id,
     });
-    res.send("todo has been deleted")
+    res.send("todo has been deleted");
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
-module.exports = { createTodo, updateTodo, deleteTodo, getTodo };
+const searchTodo = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const resutls = await todoSchema
+      .find({
+        $or: [
+          { todo: { $regex: keyword, $options: "i" } },
+          { desc: { $regex: keyword, $options: "i" } },
+        ],
+      });
+    res.json(resutls);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Search Product API",
+      error,
+    });
+  }
+};
+
+module.exports = { createTodo, updateTodo, deleteTodo, getTodo, getOneTodo, searchTodo };

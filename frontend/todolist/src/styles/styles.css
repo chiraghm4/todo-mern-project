@@ -3,3 +3,11 @@
     justify-content: center;
     flex-direction: column;
 }
+
+@media screen and (min-width: 426px) {
+    .todo-container {
+        overflow-y: scroll;
+        max-height: 70vh;
+    }
+    
+}

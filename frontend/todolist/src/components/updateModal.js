@@ -6,6 +6,16 @@ function UpdateModal({ show, handleClose, todo_id }) {
   console.log(todo_id);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  // const [oneTodo, setOneTodo] = useState({})
+  // useEffect(() => {
+  //   const todoInfo = async () => {
+  //     const oneTodoInfo = axios.get(`http://localhost:8001/todos/${todo_id}`)
+  //     setOneTodo(todoInfo)
+  //   }
+  //     todoInfo();
+  // }, [])
+  
+  // console.log(oneTodo, 'holaa')
 
   const handleUpdateTodo = () => {
     axios

@@ -17,7 +17,7 @@ app.use("/todos", todoRouter)
 
 app.get('/', (req, res) => {
     
-    res.send('Welcome to todo list!');
+    res.send('Welcome to todo list backend!');
 })
 
 const PORT = process.env.PORT || 8000;

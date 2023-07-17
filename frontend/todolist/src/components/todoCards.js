@@ -18,7 +18,6 @@ function TodoCard() {
           `http://localhost:8001/todos/${userId}`
         );
         setAllTodos(data);
-        // console.log(allTodos);
       } catch (err) {
         console.log(err);
       }

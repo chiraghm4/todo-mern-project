@@ -13,13 +13,6 @@ function NavBar() {
   const [keyword, setKeyword] = useState("")
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   const searchTodo = async () => {
-  //     const res = await axios.get(`http://localhost:8001/todos/search/${keyword}`)
-  //     console.log(res, 'result')
-  //   }
-  //   searchTodo()
-  // }, [keyword])
 
   const handleSubmit = async (e) => {
     try{
@@ -29,7 +22,7 @@ function NavBar() {
       dispatch(Object.assign({}, res.data));
     } catch (err) {
       console.log(err)
-    }
+    } 
   }
 
   const handleLogout = () => {

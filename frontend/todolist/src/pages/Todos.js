@@ -5,14 +5,18 @@ import AddTodoForm from "../components/addTodoForm";
 
 
 const Todos = () => {
+  const username = sessionStorage.getItem('user_name')
+
+
   return (
     <div>
       <Row>
+      <header className="text-center ">
+              <h2>Welcome {username}</h2>
+            </header>
         <Col>
           <Container>
-            <header className="text-center mt-2">
-              <h2>Todo List</h2>
-            </header>
+            <h3 className="text-center mt-5">Your Tasks</h3>
             <TodoContainer />
           </Container>
         </Col>

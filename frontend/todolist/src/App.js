@@ -18,39 +18,9 @@ function App() {
     <div>
       <NavBar />
       <Routes>
-        {/* <Route path={userId!==null?`/todos`:`/`} element={userId!==null?<Todos /> : <WelcomePage />} />  */}
         <Route path="/" element={<WelcomePage />} />
         <Route path="/todos" element={<Todos />} />
       </Routes>
-      {/* <NavBar />
-
-      {isLoggedIn ? (
-        <Row>
-          <Col>
-            <Container>
-              <header className="text-center mt-2">
-                <h2>Todo List</h2>
-              </header>
-              <TodoContainer />
-            </Container>
-          </Col>
-          <Col>
-            <Container
-              style={{
-                marginTop: "120px",
-                width: "80%",
-                border: "1px solid grey",
-                padding: "18px",
-                borderRadius: "10px",
-              }}
-            >
-              <AddTodoForm />
-            </Container>
-          </Col>
-        </Row>
-      ) : (
-        <LoginPage />
-      )} */}
     </div>
   );
 }

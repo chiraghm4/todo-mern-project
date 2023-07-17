@@ -13,14 +13,15 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      console.log(username, email, password);
       const res = await axios.post("http://localhost:8001/user/register", {
         username,
         email,
         password,
       });
-      if (res.data.status === "ok") {
+      if (res.data.status !== "error") {
         alert("new user created!");
+      } else {
+        alert('use a unique username')
       }
     } catch (err) {
       console.log(err);
@@ -63,7 +64,7 @@ const RegisterForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Register</Button>
       </Form>
     </Container>
   );
@@ -72,28 +73,16 @@ const RegisterForm = () => {
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const loginStatus = useSelector((state) => state.login.isLoggedIn);
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
-    console.log(username, password);
     e.preventDefault();
-    // await axios
-    //   .post("http://localhost/8001/user/login", { username, password })
-    //   .then((res) => {
-    //     console.log(res);
-    //     sessionStorage.setItem("user_id", res.data.user._id);
-    //     // dispatch(loginActions.setLoggedIn());
-    //     console.log(loginStatus);
-    //     navigate("/todos");
-    //   })
-    //   .catch((err) => console.log(err));
+    
     try {
       const res = await axios.post("http://localhost:8001/user/login", { username, password })
       console.log(res);
       sessionStorage.setItem('user_id', res.data.user._id);
-      // dispatch(loginActions.setLoggedIn());
-      console.log(loginStatus)
+      sessionStorage.setItem('user_name', res.data.user.username);
       navigate('/todos')
     } catch (err) {
       console.log(err);

@@ -8,7 +8,7 @@ function AddTodoForm() {
   const userId = sessionStorage.getItem("user_id");
 
   const handleSubmit = async (e) => {
-    const res = axios
+    axios
       .post(`http://localhost:8001/todos/${userId}`, {
         userId: userId,
         todo: title,

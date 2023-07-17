@@ -2,6 +2,7 @@ const express = require('express')
 // import * as express from "express";
 const app = express();
 const todoRouter = require('./src/routes/todoRoutes');
+const userRouter = require('./src/routes/userRoutes')
 const connectDB = require('./src/helpers/db');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -14,9 +15,9 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use("/todos", todoRouter)
+app.use("/user", userRouter)
 
 app.get('/', (req, res) => {
-    
     res.send('Welcome to todo list backend!');
 })
 

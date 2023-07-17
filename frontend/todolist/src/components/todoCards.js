@@ -1,22 +1,22 @@
 import { React, useEffect, useState } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "../styles/styles.css";
 import UpdateModal from "./updateModal";
-import { useSelector } from "react-redux";
 
 function TodoCard() {
   const [allTodos, setAllTodos] = useState([]);
   const [deleteC, setDeleteC] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [todoId, setTodoId] = useState("");
-  const userId = sessionStorage.getItem('user_id')
-
+  const userId = sessionStorage.getItem("user_id");
 
   useEffect(() => {
     const getAllTodos = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8001/todos/${userId}`);
+        const { data } = await axios.get(
+          `http://localhost:8001/todos/${userId}`
+        );
         setAllTodos(data);
         // console.log(allTodos);
       } catch (err) {
@@ -24,7 +24,7 @@ function TodoCard() {
       }
     };
     getAllTodos();
-  }, [deleteC, showModal]);
+  }, []);
 
   const handleShow = (id) => {
     setTodoId(id);
@@ -63,7 +63,11 @@ function TodoCard() {
                     </Card.Subtitle>
                   </Col>
                   <Col className="d-flex justify-content-center align-items-center">
-                    <Button size="lg" style={{height: "70px"}} onClick={() => handleShow(item._id)}>
+                    <Button
+                      size="lg"
+                      style={{ height: "70px" }}
+                      onClick={() => handleShow(item._id)}
+                    >
                       Update
                     </Button>
                     <UpdateModal
@@ -74,7 +78,7 @@ function TodoCard() {
                     <Button
                       variant="danger"
                       size="lg"
-                      style={{height: "70px"}}  
+                      style={{ height: "70px" }}
                       onClick={() => handleDelete(item._id)}
                     >
                       Delete

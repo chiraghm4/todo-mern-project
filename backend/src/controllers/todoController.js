@@ -5,7 +5,6 @@ const getTodo = async (req, res) => {
 
   try {
     const allTodos = await todoSchema.find({userId: req.params.userId});
-    // console.log(allTodos)
     res.send(allTodos);
   } catch (err) {
     console.log(err);

@@ -5,14 +5,13 @@ const registerUser = async (req, res) => {
   try {
     await userSchema.create({
       username: username,
-      email,
-      email,
+      email: email,
       password: password,
     });
     res.json({ status: "ok" });
   } catch (err) {
     console.log("error duplicate");
-    res.json({ status: "error", error: "duplicate email" });
+    res.json({ status: "error", error: "duplicate username" });
   }
 };
 
@@ -32,6 +31,6 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = {
-    registerUser,
+  registerUser,
   loginUser,
 };

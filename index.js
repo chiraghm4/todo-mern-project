@@ -17,11 +17,11 @@ app.use(cors());
 app.use(express.json());
 app.use("/todos", todoRouter)
 app.use("/user", userRouter)
-app.use(express.static(path.join(__dirname, './frontend/todolist/build')))
+app.use(express.static(path.join(__dirname, '/frontend/todolist/build')))
 
 // for hosting
 app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/todolist/build/index.html'))
+    res.sendFile(path.join(__dirname, '/frontend/todolist/build/index.html'))
 })
 
 const PORT = process.env.PORT || 8000;

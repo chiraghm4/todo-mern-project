@@ -80,7 +80,6 @@ const LoginForm = () => {
     
     try {
       const res = await axios.post("http://localhost:8001/user/login", { username, password })
-      console.log(res);
       sessionStorage.setItem('user_id', res.data.user._id);
       sessionStorage.setItem('user_name', res.data.user.username);
       navigate('/todos')

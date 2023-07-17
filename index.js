@@ -6,6 +6,7 @@ const userRouter = require('./src/routes/userRoutes')
 const connectDB = require('./src/helpers/db');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path')
 
 //configure env
 dotenv.config();
@@ -16,9 +17,11 @@ app.use(cors());
 app.use(express.json());
 app.use("/todos", todoRouter)
 app.use("/user", userRouter)
+app.use(express.static(path.join(__dirname, './frontend/todolist/build')))
 
-app.get('/', (req, res) => {
-    res.send('Welcome to todo list backend!');
+// for hosting
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/todolist/build/index.html'))
 })
 
 const PORT = process.env.PORT || 8000;

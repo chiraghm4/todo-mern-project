@@ -8,7 +8,6 @@ const todoSchema = mongoose.Schema({
     },
     todo: {
         type: String,
-        required: true
     },
     desc: {
         type: String,

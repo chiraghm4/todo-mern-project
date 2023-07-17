@@ -5,22 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginActions } from "../store/login-slice";
 
-
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
       console.log(username, email, password);
-      const res = await axios.post(
-        "http://localhost:8001/todos/register",
-        { username, email, password }
-      );
-      if(res.data.status === 'ok') {
-        alert('new user created!')
+      const res = await axios.post("http://localhost:8001/user/register", {
+        username,
+        email,
+        password,
+      });
+      if (res.data.status === "ok") {
+        alert("new user created!");
       }
     } catch (err) {
       console.log(err);
@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
   return (
     <Container className="mt-4 p-4 form-container w-50">
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="registerUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -72,15 +72,25 @@ const RegisterForm = () => {
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
-  const loginStatus = useSelector(state=>state.login.isLoggedIn)
+  const navigate = useNavigate();
+  const loginStatus = useSelector((state) => state.login.isLoggedIn);
 
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
+    console.log(username, password);
     e.preventDefault();
+    // await axios
+    //   .post("http://localhost/8001/user/login", { username, password })
+    //   .then((res) => {
+    //     console.log(res);
+    //     sessionStorage.setItem("user_id", res.data.user._id);
+    //     // dispatch(loginActions.setLoggedIn());
+    //     console.log(loginStatus);
+    //     navigate("/todos");
+    //   })
+    //   .catch((err) => console.log(err));
     try {
-      const res = await axios.post("http://localhost:8001/todos/login", { username, password })
-      console.log(res.data.user._id);
+      const res = await axios.post("http://localhost:8001/user/login", { username, password })
+      console.log(res);
       sessionStorage.setItem('user_id', res.data.user._id);
       // dispatch(loginActions.setLoggedIn());
       console.log(loginStatus)
@@ -92,8 +102,7 @@ const LoginForm = () => {
 
   return (
     <Container className="mt-4 p-4 form-container w-50">
-
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>
           <Form.Control

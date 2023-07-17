@@ -1,7 +1,6 @@
 const todoSchema = require("../model/todo");
 
 const getTodo = async (req, res) => {
-  console.log(req.params.userId)
 
   try {
     const allTodos = await todoSchema.find({userId: req.params.userId});
@@ -13,7 +12,6 @@ const getTodo = async (req, res) => {
 
 const getOneTodo = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
   try {
     const oneTodo = await todoSchema.findOne({ _id: id });
     res.send(oneTodo);
@@ -41,8 +39,6 @@ const updateTodo = async (req, res) => {
   console.log(req.params.id);
 
   const { todo, desc } = req.body;
-  // console.log(req.body, 'body')
-  // console.log(todo, desc, 'body')
   try {
     const updatedTodo = await todoSchema.findOneAndUpdate(
       {

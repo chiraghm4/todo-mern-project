@@ -8,7 +8,7 @@
     "start": "nodemon index.js",
     "client": "npm start --prefix ./frontend/todolist",
     "server": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm start\" \"npm run client\""
   },
   "keywords": [],
   "author": "",

@@ -6,16 +6,37 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
   const [keyword, setKeyword] = useState("")
-  useEffect(() => {
-    const searchTodo = async () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  // useEffect(() => {
+  //   const searchTodo = async () => {
+  //     const res = await axios.get(`http://localhost:8001/todos/search/${keyword}`)
+  //     console.log(res, 'result')
+  //   }
+  //   searchTodo()
+  // }, [keyword])
+
+  const handleSubmit = async (e) => {
+    try{
+      e.preventDefault();
       const res = await axios.get(`http://localhost:8001/todos/search/${keyword}`)
-      console.log(res, 'result')
+      console.log(res.data)
+      dispatch(Object.assign({}, res.data));
+    } catch (err) {
+      console.log(err)
     }
-    searchTodo()
-  }, [keyword])
+  }
+
+  const handleLogout = () => {
+    sessionStorage.clear()
+    navigate('/')
+  }
+
 
   return (
     <Navbar bg="light" expand="lg">
@@ -29,7 +50,7 @@ function NavBar() {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
+            <Nav.Link href="#action2" onClick={handleLogout}>Logout</Nav.Link>
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -44,7 +65,7 @@ function NavBar() {
               Link
             </Nav.Link>
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={handleSubmit}>
             <Form.Control
               type="search"
               placeholder="Search Todo"
@@ -53,7 +74,7 @@ function NavBar() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button type='submit' variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

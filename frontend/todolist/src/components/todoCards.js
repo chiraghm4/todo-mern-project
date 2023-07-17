@@ -3,19 +3,22 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "../styles/styles.css";
 import UpdateModal from "./updateModal";
+import { useSelector } from "react-redux";
 
 function TodoCard() {
   const [allTodos, setAllTodos] = useState([]);
   const [deleteC, setDeleteC] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [todoId, setTodoId] = useState("");
+  const userId = sessionStorage.getItem('user_id')
+
 
   useEffect(() => {
     const getAllTodos = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8001/todos");
+        const { data } = await axios.get(`http://localhost:8001/todos/${userId}`);
         setAllTodos(data);
-        console.log(allTodos);
+        // console.log(allTodos);
       } catch (err) {
         console.log(err);
       }

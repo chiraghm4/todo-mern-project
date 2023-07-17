@@ -5,16 +5,19 @@ import axios from "axios";
 function AddTodoForm() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const userId = sessionStorage.getItem("user_id");
 
-  const handleSubmit = async () => {
-    axios.post('http://localhost:8001/todos', {
+  const handleSubmit = async (e) => {
+    const res = axios
+      .post(`http://localhost:8001/todos/${userId}`, {
+        userId: userId,
         todo: title,
-        desc: desc
+        desc: desc,
       })
-      .then(function (response) {
-        console.log(response);
+      .then((res) => {
+        console.log(res);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -32,7 +35,11 @@ function AddTodoForm() {
       </Form.Group>
       <Form.Group className="mb-3" controlId="todoDesc">
         <Form.Label>Description</Form.Label>
-        <Form.Control type="text" value={desc} onChange={(e) => setDesc(e.target.value)} />
+        <Form.Control
+          type="text"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+        />
       </Form.Group>
       <Button type="submit" variant="success" size="lg">
         Add Todo

@@ -1,8 +1,42 @@
 const todoSchema = require("../model/todo");
+const userSchema = require("../model/users");
+
+const registerUser = async (req, res) => {
+  const { username,email, password } = req.body;
+  try {
+    await userSchema.create({
+      username: username,
+      email, email,
+      password: password,
+    });
+    res.json({ status: "ok" });
+  } catch (err) {
+    console.log('error duplicate')
+    res.json({ status: "error", error: "duplicate email" });
+  }
+};
+
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  
+  const user = await userSchema.findOne({
+    username: username,
+    password: password,
+  });
+
+  if(user) {
+    return res.json({status: 'ok', user: user})
+  } else {
+    return res.json({status: 'error', user: false})
+  }
+  
+};
 
 const getTodo = async (req, res) => {
+  console.log(req.params.userId)
+
   try {
-    const allTodos = await todoSchema.find();
+    const allTodos = await todoSchema.find({userId: req.params.userId});
     // console.log(allTodos)
     res.send(allTodos);
   } catch (err) {
@@ -11,18 +45,22 @@ const getTodo = async (req, res) => {
 };
 
 const getOneTodo = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
+  console.log(id);
   try {
-    const oneTodo = await todoSchema.findOne({_id: ObjectId(id)})
-  } catch(err) {
-    console.log(err)
+    const oneTodo = await todoSchema.findOne({ _id: id });
+    res.send(oneTodo);
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const createTodo = async (req, res) => {
   const { todo, desc } = req.body;
+  const userId = req.params.userId
   try {
     const newTodo = await todoSchema.create({
+      userId: userId,
       todo: todo,
       desc: desc,
     });
@@ -69,13 +107,12 @@ const deleteTodo = async (req, res) => {
 const searchTodo = async (req, res) => {
   try {
     const { keyword } = req.params;
-    const resutls = await todoSchema
-      .find({
-        $or: [
-          { todo: { $regex: keyword, $options: "i" } },
-          { desc: { $regex: keyword, $options: "i" } },
-        ],
-      });
+    const resutls = await todoSchema.find({
+      $or: [
+        { todo: { $regex: keyword, $options: "i" } },
+        { desc: { $regex: keyword, $options: "i" } },
+      ],
+    });
     res.json(resutls);
   } catch (error) {
     console.log(error);
@@ -87,4 +124,13 @@ const searchTodo = async (req, res) => {
   }
 };
 
-module.exports = { createTodo, updateTodo, deleteTodo, getTodo, getOneTodo, searchTodo };
+module.exports = {
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  getTodo,
+  getOneTodo,
+  searchTodo,
+  registerUser,
+  loginUser
+};

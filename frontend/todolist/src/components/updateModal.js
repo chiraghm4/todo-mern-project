@@ -3,7 +3,7 @@ import { Button, Modal, Form, Container } from "react-bootstrap";
 import axios from "axios";
 
 function UpdateModal({ show, handleClose, todo_id }) {
-  console.log(todo_id);
+  // console.log(todo_id);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   // const [oneTodo, setOneTodo] = useState({})

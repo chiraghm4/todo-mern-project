@@ -24,6 +24,8 @@ app.use("/user", userRouter)
 //     res.sendFile(path.join(__dirname, 'frontend', 'todolist', 'build', 'index.html'))
 // })
 
+app.get('/', (req, res) => {res.send({welcome: "to the backend!"})})
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));

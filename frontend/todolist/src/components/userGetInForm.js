@@ -13,7 +13,7 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${SERVER_API}/user/register`, {
+      const res = await axios.post(`${process.env.SERVER_API}/user/register`, {
         username,
         email,
         password,
@@ -79,7 +79,7 @@ const LoginForm = () => {
     e.preventDefault();
     
     try {
-      const res = await axios.post(`${SERVER_API}/user/login`, { username, password })
+      const res = await axios.post(`${process.env.SERVER_API}/user/login`, { username, password })
       sessionStorage.setItem('user_id', res.data.user._id);
       sessionStorage.setItem('user_name', res.data.user.username);
       navigate('/todos')

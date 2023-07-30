@@ -17,7 +17,7 @@ function NavBar() {
   const handleSubmit = async (e) => {
     try{
       e.preventDefault();
-      const res = await axios.get(`${SERVER_API}/todos/search/${keyword}`)
+      const res = await axios.get(`${process.env.SERVER_API}/todos/search/${keyword}`)
       console.log(res.data)
       dispatch(Object.assign({}, res.data));
     } catch (err) {

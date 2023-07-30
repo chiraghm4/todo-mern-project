@@ -37,7 +37,7 @@ function TodoCard() {
   const handleDelete = async (id) => {
     console.log(id);
     axios
-      .delete(`${SERVER_API}/todos/${id}`)
+      .delete(`${process.env.SERVER_API}/todos/${id}`)
       .then(function (res) {
         setDeleteC(deleteC + 1);
         console.log(res);

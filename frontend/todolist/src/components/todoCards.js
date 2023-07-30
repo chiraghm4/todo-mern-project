@@ -15,7 +15,7 @@ function TodoCard() {
     const getAllTodos = async () => {
       try {
         const { data } = await axios.get(
-          `${SERVER_API}/todos/${userId}`
+          `${process.env.SERVER_API}/todos/${userId}`
         );
         setAllTodos(data);
       } catch (err) {

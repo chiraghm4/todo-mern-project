@@ -15,7 +15,7 @@ function TodoCard() {
     const getAllTodos = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8001/todos/${userId}`
+          `${SERVER_API}/todos/${userId}`
         );
         setAllTodos(data);
       } catch (err) {
@@ -37,7 +37,7 @@ function TodoCard() {
   const handleDelete = async (id) => {
     console.log(id);
     axios
-      .delete(`http://localhost:8001/todos/${id}`)
+      .delete(`${SERVER_API}/todos/${id}`)
       .then(function (res) {
         setDeleteC(deleteC + 1);
         console.log(res);

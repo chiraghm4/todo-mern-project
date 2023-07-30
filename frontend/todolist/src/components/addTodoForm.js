@@ -9,7 +9,7 @@ function AddTodoForm() {
 
   const handleSubmit = async (e) => {
     axios
-      .post(`http://localhost:8001/todos/${userId}`, {
+      .post(`${process.env.SERVER_API}/todos/${userId}`, {
         userId: userId,
         todo: title,
         desc: desc,

@@ -19,7 +19,7 @@ function UpdateModal({ show, handleClose, todo_id }) {
 
   const handleUpdateTodo = () => {
     axios
-      .put(`${SERVER_API}/todos/${todo_id}`, {
+      .put(`${process.env.SERVER_API}/todos/${todo_id}`, {
         todo: title,
         desc: desc,
       })
